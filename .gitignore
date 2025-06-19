@@ -1,0 +1,19 @@
+# .NET build folders
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+
+# Visual Studio files
+.vs/
+.vscode/
+
+# ASP.NET Core secrets
+appsettings.*.json
+!appsettings.Development.json
+
+# Others
+*.db
+*.log
