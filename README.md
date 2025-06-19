@@ -8,7 +8,7 @@ This is the **backend API** for the Task Management System built with **ASP.NET 
 
 - ASP.NET Core Web API
 - Entity Framework Core
-- PostgreSQL (or your configured database)
+- PostgreSQL
 - Swagger (for API testing/documentation)
 
 ---
