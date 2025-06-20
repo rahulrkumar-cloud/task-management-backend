@@ -1,41 +1,4 @@
-﻿//using Microsoft.EntityFrameworkCore;
-//using TaskManagementSystem.Data;
-//using TaskManagementSystem.Repositories;
-//using TaskManagementSystem.Services;
-
-//var builder = WebApplication.CreateBuilder(args);
-
-//// PostgreSQL Connection
-//builder.Services.AddDbContext<AppDbContext>(options =>
-//    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-//// Dependency Injection
-//builder.Services.AddScoped<ITaskRepository, TaskRepository>();
-//builder.Services.AddScoped<ITaskService, TaskService>();
-
-//builder.Services.AddControllers();
-//builder.Services.AddEndpointsApiExplorer();
-//builder.Services.AddSwaggerGen();
-
-//var app = builder.Build();
-
-//// Enable Swagger middleware first
-//app.UseSwagger();
-//app.UseSwaggerUI();
-
-//// Optional: redirect root to /swagger
-//app.MapGet("/", context =>
-//{
-//    context.Response.Redirect("/swagger");
-//    return Task.CompletedTask;
-//});
-
-//app.UseHttpsRedirection();
-//app.UseAuthorization();
-//app.MapControllers();
-
-//app.Run();
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using TaskManagementSystem.Data;
 using TaskManagementSystem.Repositories;
@@ -43,10 +6,8 @@ using TaskManagementSystem.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Check and create database if not exists
 EnsureDatabaseExists(builder.Configuration);
 
-// ✅ Add CORS policy
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
@@ -68,13 +29,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
+
+
 var app = builder.Build();
 
-// ✅ Use Swagger first
 app.UseSwagger();
 app.UseSwaggerUI();
 
-// ✅ Enable CORS middleware
 app.UseCors();
 
 app.MapGet("/", context =>
@@ -114,7 +76,7 @@ void EnsureDatabaseExists(IConfiguration config)
             using var createDbCmd = adminConn.CreateCommand();
             createDbCmd.CommandText = $"CREATE DATABASE \"{targetDb}\"";
             createDbCmd.ExecuteNonQuery();
-            Console.WriteLine($"✅ Created database: {targetDb}");
+            Console.WriteLine($"Created database: {targetDb}");
         }
     }
 
@@ -136,5 +98,5 @@ void EnsureDatabaseExists(IConfiguration config)
         );
     ";
     tableCmd.ExecuteNonQuery();
-    Console.WriteLine("✅ Created table 'Tasks' in database: " + targetDb);
+    Console.WriteLine("Created table 'Tasks' in database: " + targetDb);
 }

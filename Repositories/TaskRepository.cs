@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TaskManagementSystem.Data;
 using TaskModel = TaskManagementSystem.Models.Task;
+using System;
 
 namespace TaskManagementSystem.Repositories
 {
@@ -21,6 +22,8 @@ namespace TaskManagementSystem.Repositories
 
         public async Task<TaskModel> AddTaskAsync(TaskModel task)
         {
+            ValidateTask(task);
+
             _context.Tasks.Add(task);
             await _context.SaveChangesAsync();
             return task;
@@ -28,6 +31,8 @@ namespace TaskManagementSystem.Repositories
 
         public async Task<TaskModel?> UpdateTaskAsync(TaskModel task)
         {
+            ValidateTask(task);
+
             var existing = await _context.Tasks.FindAsync(task.TaskId);
             if (existing == null) return null;
 
@@ -48,6 +53,19 @@ namespace TaskManagementSystem.Repositories
             _context.Tasks.Remove(task);
             await _context.SaveChangesAsync();
             return true;
+        }
+
+        //  Validation Method
+        private void ValidateTask(TaskModel task)
+        {
+            if (string.IsNullOrWhiteSpace(task.Title))
+                throw new ArgumentException("Title is required.");
+
+            if (task.DueDate == default)
+                throw new ArgumentException("Valid Due Date is required.");
+
+            if (!Enum.IsDefined(typeof(TaskManagementSystem.Models.TaskStatus), task.Status))
+                throw new ArgumentException("Invalid Status.");
         }
     }
 }

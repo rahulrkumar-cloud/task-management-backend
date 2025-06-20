@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TaskManagementSystem.DTOs;
 using TaskManagementSystem.Services;
 
 namespace TaskManagementSystem.Controllers
@@ -39,7 +38,7 @@ namespace TaskManagementSystem.Controllers
             }
             catch (Exception ex)
             {
-                // For logging/debugging - optional
+                
                 return StatusCode(500, new { message = "An unexpected error occurred.", details = ex.Message });
             }
         }

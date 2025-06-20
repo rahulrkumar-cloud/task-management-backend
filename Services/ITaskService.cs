@@ -1,5 +1,4 @@
-﻿using TaskManagementSystem.DTOs;
-using TaskModel = TaskManagementSystem.Models.Task;
+﻿using TaskModel = TaskManagementSystem.Models.Task;
 
 namespace TaskManagementSystem.Services
 {
